@@ -1,0 +1,27 @@
+{
+  "name": "action-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeet-dev/action-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeet-dev/action-utils/issues"
+  },
+  "homepage": "https://github.com/zeet-dev/action-utils#readme",
+  "dependencies": {
+    "@actions/core": "^1.8.2",
+    "@actions/exec": "^1.1.1",
+    "@actions/http-client": "^2.0.1",
+    "@actions/tool-cache": "^2.0.1",
+    "eslint": "^8.16.0"
+  }
+}
