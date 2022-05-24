@@ -1,0 +1,1 @@
+export { installBinary } from "./cli";
