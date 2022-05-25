@@ -66,13 +66,6 @@ export async function installBinary() {
     const cachedPath = await tc.cacheDir(binaryPath, "zeet", tagName);
     core.addPath(cachedPath);
   }
-
-  // Configure api url
-  const apiURL = core.getInput("api_url", { required: true });
-  await exec.exec("zeet", ["config:set", `server=${apiURL}`]);
-
-  const token = core.getInput("token", { required: true });
-  await exec.exec("zeet", ["login", `--token=${token}`]);
 }
 
 export async function configureCLI(token: string, apiURL?: string) {
