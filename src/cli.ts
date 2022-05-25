@@ -49,11 +49,10 @@ async function downloadBinary(url: string): Promise<string> {
   let extractedPath;
   if (url.endsWith(".tar.gz")) {
     extractedPath = await tc.extractTar(binaryPath)
-  }
-  if (url.endsWith(".zip")) {
+  } else if (url.endsWith(".zip")) {
     extractedPath = await tc.extractZip(binaryPath)
   } else {
-    throw "Could not extract file"
+    throw "Could not extract file " + url
   }
 
   return extractedPath

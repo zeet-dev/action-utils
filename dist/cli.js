@@ -76,11 +76,11 @@ function downloadBinary(url) {
         if (url.endsWith(".tar.gz")) {
             extractedPath = yield tc.extractTar(binaryPath);
         }
-        if (url.endsWith(".zip")) {
+        else if (url.endsWith(".zip")) {
             extractedPath = yield tc.extractZip(binaryPath);
         }
         else {
-            throw "Could not extract file";
+            throw "Could not extract file " + url;
         }
         return extractedPath;
     });
