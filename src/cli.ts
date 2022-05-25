@@ -1,7 +1,7 @@
-import tc from "@actions/tool-cache"
-import core from "@actions/core"
-import exec from "@actions/exec"
-import http from "@actions/http-client"
+import * as tc from "@actions/tool-cache"
+import * as core from "@actions/core"
+import * as exec from "@actions/exec"
+import * as http from "@actions/http-client"
 
 type Asset = { name: string }
 

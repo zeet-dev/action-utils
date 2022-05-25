@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,16 +31,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.installBinary = void 0;
-const tool_cache_1 = __importDefault(require("@actions/tool-cache"));
-const core_1 = __importDefault(require("@actions/core"));
-const exec_1 = __importDefault(require("@actions/exec"));
-const http_client_1 = __importDefault(require("@actions/http-client"));
-const client = new http_client_1.default.HttpClient("action-zeet");
+const tc = __importStar(require("@actions/tool-cache"));
+const core = __importStar(require("@actions/core"));
+const exec = __importStar(require("@actions/exec"));
+const http = __importStar(require("@actions/http-client"));
+const client = new http.HttpClient("action-zeet");
 function getBinaryURL() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest");
@@ -51,13 +71,13 @@ function getBinaryURL() {
 }
 function downloadBinary(url) {
     return __awaiter(this, void 0, void 0, function* () {
-        const binaryPath = yield tool_cache_1.default.downloadTool(url);
+        const binaryPath = yield tc.downloadTool(url);
         let extractedPath;
         if (url.endsWith(".tar.gz")) {
-            extractedPath = yield tool_cache_1.default.extractTar(binaryPath);
+            extractedPath = yield tc.extractTar(binaryPath);
         }
         if (url.endsWith(".zip")) {
-            extractedPath = yield tool_cache_1.default.extractZip(binaryPath);
+            extractedPath = yield tc.extractZip(binaryPath);
         }
         else {
             throw "Could not extract file";
@@ -68,16 +88,16 @@ function downloadBinary(url) {
 function installBinary() {
     return __awaiter(this, void 0, void 0, function* () {
         const [binaryURL, tagName] = yield getBinaryURL();
-        if (!tool_cache_1.default.find("zeet", tagName)) {
+        if (!tc.find("zeet", tagName)) {
             const binaryPath = yield downloadBinary(binaryURL);
-            const cachedPath = yield tool_cache_1.default.cacheDir(binaryPath, "zeet", tagName);
-            core_1.default.addPath(cachedPath);
+            const cachedPath = yield tc.cacheDir(binaryPath, "zeet", tagName);
+            core.addPath(cachedPath);
         }
         // Configure api url
-        const apiURL = core_1.default.getInput("api_url", { required: true });
-        yield exec_1.default.exec("zeet", ["config:set", `server=${apiURL}`]);
-        const token = core_1.default.getInput("token", { required: true });
-        yield exec_1.default.exec("zeet", ["login", `--token=${token}`]);
+        const apiURL = core.getInput("api_url", { required: true });
+        yield exec.exec("zeet", ["config:set", `server=${apiURL}`]);
+        const token = core.getInput("token", { required: true });
+        yield exec.exec("zeet", ["login", `--token=${token}`]);
     });
 }
 exports.installBinary = installBinary;
