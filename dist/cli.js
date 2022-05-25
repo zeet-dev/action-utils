@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.installBinary = void 0;
+exports.configureCLI = exports.installBinary = void 0;
 const tc = __importStar(require("@actions/tool-cache"));
 const core = __importStar(require("@actions/core"));
 const exec = __importStar(require("@actions/exec"));
@@ -101,3 +101,11 @@ function installBinary() {
     });
 }
 exports.installBinary = installBinary;
+function configureCLI(token, apiURL) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield exec.exec("zeet login", ["--token=" + token]);
+        if (apiURL)
+            yield exec.exec("zeet config:set", ["server=" + apiURL]);
+    });
+}
+exports.configureCLI = configureCLI;
