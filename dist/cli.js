@@ -98,7 +98,7 @@ function installBinary() {
 exports.installBinary = installBinary;
 function configureCLI(token, apiURL) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield exec.exec("zeet login", ["--token=" + token]);
+        yield exec.exec("zeet login", [`--token=${token}`]);
         if (apiURL)
             yield exec.exec("zeet config:set", ["server=" + apiURL]);
     });

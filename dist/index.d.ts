@@ -1,1 +1,1 @@
-export { installBinary } from "./cli";
+export { installBinary, configureCLI } from "./cli";
