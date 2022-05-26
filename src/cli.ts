@@ -69,6 +69,6 @@ export async function installBinary() {
 }
 
 export async function configureCLI(token: string, apiURL?: string) {
-  await exec.exec("zeet login", ["--token="+token])
+  await exec.exec("zeet login", [`--token=${token}`])
   if (apiURL) await exec.exec("zeet config:set", ["server="+apiURL])
 }
